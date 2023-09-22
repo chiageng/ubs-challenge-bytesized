@@ -1,0 +1,23 @@
+{
+  "name": "ubs-challenge",
+  "version": "1.0.0",
+  "description": "UBS Coding Challenge API",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon -r esm app.js"
+  },
+  "keywords": [
+    "node",
+    "api"
+  ],
+  "author": "ByteSized",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "esm": "^3.2.25",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.1"
+  }
+}
