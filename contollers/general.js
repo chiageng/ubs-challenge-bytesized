@@ -151,8 +151,12 @@ export const railway_builder = async (req, res) => {
       let pieceLength = data[1]; // list of blocks
 
       let pieces = data.slice(2, 2 + pieceLength)
+      console.log(pieces);
       let results = find_combinations(pieces, targetLength);
+      console.log("find results end")
+      console.log(results)
       output.push(results.length);
+      console.log(output)
     }
   }
 
