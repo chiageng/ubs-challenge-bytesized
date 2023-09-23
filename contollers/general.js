@@ -97,6 +97,13 @@ export const greedyMonkey = async (req, res) => {
   }
 };
 
+export const colony = async (req, res) => {
+  try {
+  } catch (err) {
+    res.status(400).send(err);
+  }
+};
+
 export const railway_builder = async (req, res) => {
   const inputs = req.body;
   let output = [];
@@ -110,9 +117,9 @@ export const railway_builder = async (req, res) => {
       if (target < 0 || start == pieces.length) {
         return;
       }
-      currCombination.push(pieces[start])
+      currCombination.push(pieces[start]);
       backtrack(pieces, start, target - pieces[start], currCombination, result);
-      currCombination.pop()
+      currCombination.pop();
 
       backtrack(pieces, start + 1, target, currCombination, result);
     }
@@ -129,11 +136,17 @@ export const railway_builder = async (req, res) => {
     i++ // input is a list
   ) {
     let data = inputs[i].split(", ");
-    let targetLength = data[0];
-    let pieces = data.slice(2); // list of blocks
+    if (data.length < 2) {
+      output.push(0);
+    } else {
+      console.log(data);
+      let targetLength = data[0];
+      console.log(targetLength);
+      let pieces = data.slice(2); // list of blocks
 
-    let results = find_combinations(pieces, targetLength);
-    output.push(results.length);
+      let results = find_combinations(pieces, targetLength);
+      output.push(results.length);
+    }
   }
 
   res.send(output);
