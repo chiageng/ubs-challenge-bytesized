@@ -11,7 +11,7 @@ export const test = async (req, res) => {
 export const getNextProbableWords = async (req, res) => {
   try {
     const { classes, statements } = req.body;
-    console.log(req.body)
+    console.log(req.body);
 
     // Fill in your solution here and return the correct output based on the given input
 
@@ -85,55 +85,56 @@ export const getNextProbableWords = async (req, res) => {
 
 export const greedyMonkey = async (req, res) => {
   try {
-    const { w, v, f} = req.body;
-    console.log("requesting")
-    console.log(req.body)
-    let max = await backtracking(w, v, f)
-    console.log("receive max")
+    const { w, v, f } = req.body;
+    console.log("requesting");
+    console.log(req.body);
+    let max = await backtracking(w, v, f);
+    console.log("receive max");
     console.log(max);
-    res.send(max.toString())
+    res.send(max.toString());
   } catch (err) {
-    res.status(400).send(err)
+    res.status(400).send(err);
   }
-}
+};
 
 export const railway_builder = async (req, res) => {
   const inputs = req.body;
-  let output = []
+  let output = [];
 
-  function find_combinations(pieces, length)
-  {
-    function backtrack(start, length, ans)
-    {
-      if (length == 0)
-      {
-        result.push(ans)
-        return
+  function find_combinations(pieces, target) {
+    function backtrack(pieces, start, target, currCombination, result) {
+      if (target == 0) {
+        result.push(currCombination);
+        return;
       }
-      if (length < 0 || start == pieces.length)
-      {
-        return
+      if (target < 0 || start == pieces.length) {
+        return;
       }
+      currCombination.push(pieces[start])
+      backtrack(pieces, start, target - pieces[start], currCombination, result);
+      currCombination.pop()
 
-      backtrack(start, length - pieces[start], ans + [pieces[start]])
-
-      backtrack(start + 1, length, ans)
+      backtrack(pieces, start + 1, target, currCombination, result);
     }
 
-    let result = []
-    backtrack(0, length, result)
-    return result
+    let result = [];
+    let curr = [];
+    backtrack(pieces, 0, target, curr, result);
+    return result;
   }
 
-  for (let i = 0; i < inputs.length; i++) // input is a list
-  {
-    let data = inputs[i].split(", ")
-    let length = data[0]
-    let pieces = data.slice(2) // list of blocks
+  for (
+    let i = 0;
+    i < inputs.length;
+    i++ // input is a list
+  ) {
+    let data = inputs[i].split(", ");
+    let targetLength = data[0];
+    let pieces = data.slice(2); // list of blocks
 
-    let results = find_combinations(pieces, length)
-    output.push(results.length)
+    let results = find_combinations(pieces, targetLength);
+    output.push(results.length);
   }
 
   res.send(output);
-}
+};
