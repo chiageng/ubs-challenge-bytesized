@@ -96,3 +96,44 @@ export const greedyMonkey = async (req, res) => {
     res.status(400).send(err)
   }
 }
+
+export const railway_builder = async (req, res) => {
+  const inputs = req.body;
+  let output = []
+
+  function find_combinations(pieces, length)
+  {
+    function backtrack(start, length, ans)
+    {
+      if (length == 0)
+      {
+        result.push(ans)
+        return
+      }
+      if (length < 0 || start == pieces.length)
+      {
+        return
+      }
+
+      backtrack(start, length - pieces[start], ans + [pieces[start]])
+
+      backtrack(start + 1, length, ans)
+    }
+
+    let result = []
+    backtrack(0, length, result)
+    return result
+  }
+
+  for (let i = 0; i < inputs.length; i++) // input is a list
+  {
+    let data = inputs[i].split(", ")
+    let length = data[0]
+    let pieces = data.slice(2) // list of blocks
+
+    let results = find_combinations(pieces, length)
+    output.push(results.length)
+  }
+
+  res.send(output);
+}
