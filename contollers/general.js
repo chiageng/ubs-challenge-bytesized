@@ -9,6 +9,7 @@ export const test = async (req, res) => {
 export const getNextProbableWords = async (req, res) => {
   try {
     const { classes, statements } = req.body;
+    console.log(req.body)
 
     // Fill in your solution here and return the correct output based on the given input
 
@@ -79,3 +80,12 @@ export const getNextProbableWords = async (req, res) => {
     res.status(400).send(err);
   }
 };
+
+export const greedyMonkey = async (req, res) => {
+  try {
+    console.log(req.body)
+    res.send("here")
+  } catch (err) {
+    res.status(400).send(err)
+  }
+}
