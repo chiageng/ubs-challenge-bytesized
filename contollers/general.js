@@ -106,59 +106,66 @@ export const colony = async (req, res) => {
 
     res.send(output);
   } catch (err) {
+    console.log(err)
     res.status(400).send(err);
   }
 };
 
 export const railway_builder = async (req, res) => {
-  const inputs = req.body;
-  let output = [];
-
-  function find_combinations(pieces, target) {
-    function backtrack(pieces, start, target, currCombination, result) {
-      if (target == 0) {
-        result.push(currCombination);
-        return;
+  try {
+    const inputs = req.body;
+    let output = [];
+  
+    function find_combinations(pieces, target) {
+      function backtrack(pieces, start, target, currCombination, result) {
+        if (target == 0) {
+          result.push(currCombination);
+          return;
+        }
+        if (target < 0 || start == pieces.length) {
+          return;
+        }
+        currCombination.push(pieces[start]);
+        backtrack(pieces, start, target - pieces[start], currCombination, result);
+        currCombination.pop();
+  
+        backtrack(pieces, start + 1, target, currCombination, result);
       }
-      if (target < 0 || start == pieces.length) {
-        return;
+  
+      let result = [];
+      let curr = [];
+      backtrack(pieces, 0, target, curr, result);
+      return result;
+    }
+  
+    for (
+      let i = 0;
+      i < inputs.length;
+      i++ // input is a list
+    ) {
+      let data = inputs[i].split(", ");
+      if (data.length < 2) {
+        output.push(0);
+      } else {
+        console.log(data);
+        let targetLength = data[0];
+        console.log(targetLength);
+        let pieceLength = data[1]; // list of blocks
+  
+        let pieces = data.slice(2, 2 + pieceLength)
+        console.log(pieces);
+        let results = find_combinations(pieces, targetLength);
+        console.log("find results end")
+        console.log(results)
+        output.push(results.length);
+        console.log(output)
       }
-      currCombination.push(pieces[start]);
-      backtrack(pieces, start, target - pieces[start], currCombination, result);
-      currCombination.pop();
-
-      backtrack(pieces, start + 1, target, currCombination, result);
     }
-
-    let result = [];
-    let curr = [];
-    backtrack(pieces, 0, target, curr, result);
-    return result;
+  
+    res.send(output);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err);
   }
-
-  for (
-    let i = 0;
-    i < inputs.length;
-    i++ // input is a list
-  ) {
-    let data = inputs[i].split(", ");
-    if (data.length < 2) {
-      output.push(0);
-    } else {
-      console.log(data);
-      let targetLength = data[0];
-      console.log(targetLength);
-      let pieceLength = data[1]; // list of blocks
-
-      let pieces = data.slice(2, 2 + pieceLength)
-      console.log(pieces);
-      let results = find_combinations(pieces, targetLength);
-      console.log("find results end")
-      console.log(results)
-      output.push(results.length);
-      console.log(output)
-    }
-  }
-
-  res.send(output);
+  
 };

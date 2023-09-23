@@ -12,6 +12,9 @@ export const colonyBalcony = async (arr) => {
 
 const runAllGeneration = async (generation, colony) => {
   let newColony = await colony.toString();
+  if (generation > 30) {
+    return 0;
+  }
   // console.log("heree")
   // console.log(newColony)
   // console.log(typeof generation)
