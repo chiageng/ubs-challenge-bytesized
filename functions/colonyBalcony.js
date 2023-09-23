@@ -3,8 +3,12 @@ export const colonyBalcony = async (arr) => {
 
   for (let i = 0; i < arr.length; i++) {
     let curr = arr[i];
-    let tempOutput = await runAllGeneration(curr.generations, curr.colony);
-    output.push(await summation(tempOutput))
+    if (curr.generations > 20) {
+      continue;
+    } else {
+      let tempOutput = await runAllGeneration(curr.generations, curr.colony);
+      output.push(await summation(tempOutput))
+    }
   }
   console.log(output)
   return output
