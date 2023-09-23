@@ -1,3 +1,4 @@
+import { colonyBalcony } from "../functions/colonyBalcony";
 import { backtracking } from "../functions/greedyMonkey";
 
 export const test = async (req, res) => {
@@ -99,6 +100,11 @@ export const greedyMonkey = async (req, res) => {
 
 export const colony = async (req, res) => {
   try {
+    const arr = req.body 
+
+    const output = await colonyBalcony(arr);
+
+    res.send(output);
   } catch (err) {
     res.status(400).send(err);
   }
